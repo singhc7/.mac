@@ -6,3 +6,12 @@
 	email = chahat@disroot.org
 [gpg]
 	program = gpg
+[init]
+	defaultBranch = main
+[fetch]
+	prune = true
+[push]
+	autoSetupRemote = true
+	default = simple
+[pull]
+	rebase = true
