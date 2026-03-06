@@ -1,5 +1,3 @@
-[![License: PolyForm Noncommercial](https://img.shields.io/badge/License-PolyForm%20Noncommercial-blue.svg?style=for-the-badge)](https://polyformproject.org/licenses/noncommercial/1.0.0/)
-
 # Dotfiles
 
 A minimalist, personal collection of configuration files optimized for a resource-efficient workflow across Fedora Linux and macOS. 
