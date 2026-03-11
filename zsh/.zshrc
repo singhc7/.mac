@@ -64,3 +64,5 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     # 2. To clean and remove old dependencies
     alias clean-system='sudo dnf autoremove && flatpak uninstall --unused && pipx interpreter prune'
 fi
+export EDITOR='nvim'
+export VISUAL='nvim'
