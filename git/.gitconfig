@@ -26,3 +26,4 @@
 	undo = reset --soft HEAD~1
 	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
 	ci = commit
+	unstage = git restore --staged
