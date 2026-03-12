@@ -66,3 +66,5 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
 fi
 export EDITOR='nvim'
 export VISUAL='nvim'
+# --- Installs npm packages globally into user space ---
+export PATH=~/.npm-global/bin:$PATH
