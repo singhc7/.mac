@@ -47,3 +47,6 @@ if command -v eza >/dev/null 2>&1; then
     alias lt='eza --tree --icons --group-directories-first'
     alias l.='eza -d .* --icons --group-directories-first'
 fi
+
+# 8. Load zoxide configuration (Must be at the end to shadow cd)
+[[ -f ~/.config/zoxide/zoxide.zsh ]] && source ~/.config/zoxide/zoxide.zsh
