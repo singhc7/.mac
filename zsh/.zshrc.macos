@@ -1,2 +1,2 @@
 # macOS specific Zsh configurations
-# Add Homebrew, custom aliases for Mac, etc.
+# This file is sourced in .zshrc if OSTYPE is darwin
