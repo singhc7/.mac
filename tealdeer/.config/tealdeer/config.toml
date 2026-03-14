@@ -1,0 +1,14 @@
+[display]
+compact = true
+use_pager = false
+
+[updates]
+auto_update = true
+auto_update_interval_hours = 168
+
+[style]
+description = { foreground = "white" }
+command_name = { foreground = "cyan", bold = true }
+example_text = { foreground = "green" }
+example_code = { foreground = "cyan" }
+example_variable = { foreground = "yellow", italic = true }
