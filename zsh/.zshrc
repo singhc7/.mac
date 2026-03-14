@@ -38,3 +38,12 @@ export EDITOR='nvim'
 export VISUAL='nvim'
 # --- Installs npm packages globally into user space ---
 export PATH=~/.npm-global/bin:$PATH
+
+# --- Eza Aliases (Modern replacement for ls) ---
+if command -v eza >/dev/null 2>&1; then
+    alias ls='eza --icons --group-directories-first'
+    alias ll='eza -lh --icons --git --group-directories-first'
+    alias la='eza -lha --icons --git --group-directories-first'
+    alias lt='eza --tree --icons --group-directories-first'
+    alias l.='eza -d .* --icons --group-directories-first'
+fi
