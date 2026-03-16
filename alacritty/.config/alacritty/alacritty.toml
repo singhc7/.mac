@@ -1,0 +1,51 @@
+[general]
+import = [
+    "~/.config/alacritty/font-os.toml"
+]
+
+[window]
+decorations = "None"
+opacity = 1.0
+
+[window.padding]
+x = 8
+y = 8
+
+[font]
+size = 14
+
+[colors.primary]
+background = '#000000'
+foreground = '#ffffff'
+
+[colors.cursor]
+text = "#000000"
+cursor = "#00e5ff"
+
+[colors.selection]
+text = "#000000"
+background = "#00e5ff"
+
+[colors.normal]
+black   = '#01060E'
+red     = '#EA6C73'
+green   = '#91B362'
+yellow  = '#F9AF4F'
+blue    = '#53BDFA'
+magenta = '#FAE994'
+cyan    = '#90E1C6'
+white   = '#C7C7C7'
+
+[colors.bright]
+black   = '#686868'
+red     = '#F07178'
+green   = '#C2D94C'
+yellow  = '#FFB454'
+blue    = '#59C2FF'
+magenta = '#FFEE99'
+cyan    = '#95E6CB'
+white   = '#FFFFFF'
+
+[cursor]
+style = { shape = "Beam", blinking = "Always" }
+vi_mode_style = { shape = "Block", blinking = "Off" }
