@@ -16,8 +16,8 @@ ZSH_HIGHLIGHT_STYLES[single-hyphen-option]='none'
 ZSH_HIGHLIGHT_STYLES[double-hyphen-option]='none'
 
 # Other styling
-ZSH_HIGHLIGHT_STYLES[path]='none'
-ZSH_HIGHLIGHT_STYLES[path_prefix]='none'
+ZSH_HIGHLIGHT_STYLES[path]='underline'
+ZSH_HIGHLIGHT_STYLES[path_prefix]='underline'
 ZSH_HIGHLIGHT_STYLES[globbing]='none'
 
 # --- Output Reset ---
