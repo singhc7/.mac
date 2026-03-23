@@ -12,8 +12,6 @@ return {
         python = { 'ruff' },
         sh = { 'shellcheck' },
         bash = { 'shellcheck' },
-        c = { 'cppcheck' },
-        cpp = { 'cppcheck' },
       }
 
       -- To allow other plugins to add linters to require('lint').linters_by_ft,
