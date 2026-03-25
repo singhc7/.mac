@@ -23,38 +23,38 @@ set guioptions "" # Hide status bar and command line for a cleaner look
 # Search
 set incremental-search true
 
-# --- Colors (Pitch Black & Electric Cyan) ---
-set default-bg                  "#000000"
-set default-fg                  "#e0f7fa"
-set statusbar-bg                "#000000"
-set statusbar-fg                "#00e5ff"
-set inputbar-bg                 "#000000"
-set inputbar-fg                 "#00e5ff"
+# --- Colors (Gruvbox Dark) ---
+set default-bg                  "#1d2021"
+set default-fg                  "#ebdbb2"
+set statusbar-bg                "#282828"
+set statusbar-fg                "#ebdbb2"
+set inputbar-bg                 "#282828"
+set inputbar-fg                 "#ebdbb2"
 
-set notification-bg             "#00e5ff"
-set notification-fg             "#000000"
-set notification-error-bg       "#ff1744"
-set notification-error-fg       "#000000"
-set notification-warning-bg     "#ffea00"
-set notification-warning-fg     "#000000"
+set notification-bg             "#b8bb26"
+set notification-fg             "#1d2021"
+set notification-error-bg       "#fb4934"
+set notification-error-fg       "#1d2021"
+set notification-warning-bg     "#fabd2f"
+set notification-warning-fg     "#1d2021"
 
-set highlight-color             "#00e676"
-set highlight-active-color      "#00e5ff"
+set highlight-color             "#b8bb26"
+set highlight-active-color      "#8ec07c"
 
-set completion-bg               "#121212"
-set completion-fg               "#e0f7fa"
-set completion-highlight-bg     "#00e5ff"
-set completion-highlight-fg     "#000000"
+set completion-bg               "#3c3836"
+set completion-fg               "#ebdbb2"
+set completion-highlight-bg     "#8ec07c"
+set completion-highlight-fg     "#1d2021"
 
-set index-bg                    "#000000"
-set index-fg                    "#e0f7fa"
-set index-active-bg             "#00e5ff"
-set index-active-fg             "#000000"
+set index-bg                    "#1d2021"
+set index-fg                    "#ebdbb2"
+set index-active-bg             "#8ec07c"
+set index-active-fg             "#1d2021"
 
 # Recolor mode (Dark Mode for documents)
 set recolor                     true
-set recolor-lightcolor          "#000000"
-set recolor-darkcolor           "#e0f7fa"
+set recolor-lightcolor          "#1d2021"
+set recolor-darkcolor           "#ebdbb2"
 set recolor-keephue             false
 
 # --- Keybindings ---
