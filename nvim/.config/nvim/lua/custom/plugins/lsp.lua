@@ -52,6 +52,30 @@ return {
         end,
       })
 
+      -- Configure diagnostics (Neovim 0.11+ way)
+      vim.diagnostic.config {
+        signs = {
+          text = {
+            [vim.diagnostic.severity.ERROR] = ' ',
+            [vim.diagnostic.severity.WARN] = ' ',
+            [vim.diagnostic.severity.HINT] = '󰠠',
+            [vim.diagnostic.severity.INFO] = ' ',
+          },
+        },
+        virtual_text = {
+          prefix = '●',
+          spacing = 4,
+        },
+        underline = true,
+        update_in_insert = false,
+        severity_sort = true,
+      }
+
+      -- Set global capabilities for all servers (Neovim 0.11+)
+      vim.lsp.config('*', {
+        capabilities = require('blink.cmp').get_lsp_capabilities(),
+      })
+
       local servers = {
         lua_ls = {
           on_init = function(client)
@@ -79,8 +103,45 @@ return {
         pyright = {},
         ruff = {},
         bashls = {},
-        clangd = {},
-        jdtls = {},
+        clangd = {
+          -- Allow attaching to single files by falling back to current directory
+          root_markers = { '.git', 'compile_commands.json', 'compile_flags.txt', '.' },
+        },
+        jdtls = {
+          -- Allow attaching to single files
+          root_markers = { '.git', 'pom.xml', 'build.gradle', '.' },
+          -- Fix jdtls crashes by providing a stable workspace
+          cmd = {
+            'jdtls',
+            '-data',
+            vim.fn.stdpath 'cache' .. '/jdtls-workspace/' .. vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t'),
+          },
+          settings = {
+            java = {
+              signatureHelp = { enabled = true },
+              contentProvider = { preferred = 'fernflower' },
+              completion = {
+                favoriteStaticMembers = {
+                  'org.junit.Assert.*',
+                  'org.junit.Assume.*',
+                  'org.junit.Juipter.api.Assertions.*',
+                  'org.junit.Juipter.api.Assumptions.*',
+                  'org.junit.Juipter.api.DynamicTest.*',
+                  'org.junit.Juipter.api.DynamicContainer.*',
+                  'org.mockito.Mockito.*',
+                  'org.mockito.ArgumentMatchers.*',
+                  'org.mockito.Answers.*',
+                },
+              },
+              sources = {
+                organizeImports = {
+                  starThreshold = 9999,
+                  staticStarThreshold = 9999,
+                },
+              },
+            },
+          },
+        },
       }
 
       local tools = {
