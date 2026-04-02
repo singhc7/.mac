@@ -114,6 +114,12 @@ input type:touchpad {
        natural_scroll enabled
 #       middle_emulation enabled
    }
+
+# Ergonomic Swap: Caps Lock <-> Escape
+# Brings Escape to the home row for faster Neovim/Vim mode switching.
+input type:keyboard {
+    xkb_options caps:swapescape
+}
 #
 # You can get the names of your inputs by running: swaymsg -t get_inputs
 # Read `man 5 sway-input` for more information about this section.
