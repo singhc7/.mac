@@ -271,3 +271,16 @@ mouse_warping none
 
 # Reduce the number of font files loaded by using a system-standard monospace.
 font pango:monospace 10
+
+# --- Tokyo Night colors for Sway ---
+set $bg_color    #16161e
+set $text_color  #c0caf5
+set $sel_color   #283457
+set $accent_color #82aaff
+set $urgent_color #ff757f
+
+# Target                 border         bg             text          indicator      child_border
+client.focused           $accent_color  $accent_color  $bg_color     $accent_color  $accent_color
+client.focused_inactive  $sel_color     $sel_color     $text_color   $sel_color     $sel_color
+client.unfocused         $bg_color      $bg_color      $text_color   $bg_color      $bg_color
+client.urgent            $urgent_color  $urgent_color  $bg_color     $urgent_color  $urgent_color
