@@ -1,6 +1,34 @@
 # ==========================================
-# Shell Options
+# Shell Options & Keybindings
 # ==========================================
+
+# --- Vi Mode ---
+bindkey -v              # Enable vi mode
+export KEYTIMEOUT=1     # Reduce escape delay to 10ms
+
+# Better searching in vi mode
+# (fzf usually handles these, but good to have fallbacks)
+bindkey '^R' history-incremental-search-backward
+bindkey '^S' history-incremental-search-forward
+bindkey '^P' up-line-or-history
+bindkey '^N' down-line-or-history
+
+# Standard emacs-style bindings in insert mode for convenience
+bindkey '^A' beginning-of-line
+bindkey '^E' end-of-line
+bindkey '^K' kill-line
+bindkey '^U' backward-kill-line
+bindkey '^W' backward-kill-word
+bindkey '^H' backward-delete-char
+
+# Use 'jk' to quickly enter normal mode
+bindkey -M viins 'jk' vi-cmd-mode
+
+# --- Edit Command Line in Editor ---
+# This allows you to press 'v' in Normal mode to open the current buffer in Neovim
+autoload -Uz edit-command-line
+zle -N edit-command-line
+bindkey -M vicmd 'v' edit-command-line
 
 # Ensure the associative array exists before we try to populate it
 typeset -gA ZSH_HIGHLIGHT_STYLES

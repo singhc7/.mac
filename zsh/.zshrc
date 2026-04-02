@@ -35,11 +35,14 @@ fi
 # 1. Exports first (sets up PATH for tools)
 [[ -f "$ZSH_CONFIG_DIR/exports.zsh" ]] && source "$ZSH_CONFIG_DIR/exports.zsh"
 
-# 2. Integrations next (initializes tools using PATH)
+# 2. Options next (sets up shell options and keybindings like vi-mode)
+[[ -f "$ZSH_CONFIG_DIR/options.zsh" ]] && source "$ZSH_CONFIG_DIR/options.zsh"
+
+# 3. Integrations next (initializes tools using PATH)
 [[ -f "$ZSH_CONFIG_DIR/integrations.zsh" ]] && source "$ZSH_CONFIG_DIR/integrations.zsh"
 
-# 3. Everything else
-for config in options functions aliases; do
+# 4. Everything else
+for config in functions aliases; do
     if [[ -f "$ZSH_CONFIG_DIR/$config.zsh" ]]; then
         source "$ZSH_CONFIG_DIR/$config.zsh"
     fi
