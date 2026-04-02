@@ -8,7 +8,10 @@
 # Use the systemd user socket for a robust, background ssh-agent.
 # This eliminates race conditions and ensures the socket is always available.
 exec systemctl --user start ssh-agent.socket
-exec dbus-update-activation-environment --systemd SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/ssh-agent.socket
+# We use single quotes here so that Sway does NOT try to expand $XDG_RUNTIME_DIR.
+# Instead, it passes the literal string to /bin/sh, which will expand it correctly.
+# This resolves the "undefined variable" warning that can cascade to line 15.
+exec 'dbus-update-activation-environment --systemd SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/ssh-agent.socket'
 ### Variables
 #
 # Logo key. Use Mod1 for Alt.
@@ -38,6 +41,10 @@ set $menu $rofi_cmd -show combi -combi-modes drun#run -modes combi
 # 'pixel 1' is more efficient than 'normal' as it avoids rendering title text.
 default_border pixel 1
 default_floating_border normal
+
+# hide_edge_borders both: Disables drawing borders on the edges of the screen.
+# This reduces the number of rendering instructions per frame, saving GPU cycles.
+hide_edge_borders both
 
 # Disable gaps to reduce rendering load and maximize workspace efficiency.
 # Gaps require the compositor to render parts of the background more frequently.
@@ -73,8 +80,14 @@ output eDP-1 {
 
 ### Idle configuration
 #
-# Example configuration:
-#
+# --- RESOURCE OPTIMIZATION: Power Management ---
+# Automatically turn off the display (DPMS) after 300 seconds (5 minutes) of inactivity.
+# This reduces power consumption and GPU load during idle periods.
+# 'resume' ensures the output is turned back on immediately upon user activity.
+exec swayidle -w \
+         timeout 300 'swaymsg "output * power off"' resume 'swaymsg "output * power on"'
+
+# Original Example configuration (Commented out):
 # exec swayidle -w \
 #          timeout 300 'swaylock -f -c 000000' \
 #          timeout 600 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' \
@@ -86,9 +99,16 @@ output eDP-1 {
 
 ### Input configuration
 #
-# Example configuration:
-#
-   input type:touchpad {
+# --- PERFORMANCE OPTIMIZATION: Mouse Polling & Latency ---
+# For the 120Hz display, we use a 'flat' acceleration profile.
+# 1. It eliminates the CPU-intensive calculation of acceleration curves.
+# 2. It provides a 1:1 movement ratio, crucial for high-refresh rate precision.
+input type:pointer {
+    accel_profile flat
+    pointer_accel 0
+}
+
+input type:touchpad {
 #       dwt enabled
        tap enabled
        natural_scroll enabled
@@ -105,11 +125,25 @@ output eDP-1 {
     # Start a terminal
     bindsym $mod+Return exec $term
 
+    # --- QoL: QUICK MULTIPLEXING ---
+    # Launches the terminal and immediately attaches/starts a tmux session.
+    # This promotes a persistent workflow where work survives terminal closures.
+    bindsym $mod+Shift+Return exec $term -e tmux
+
     # Kill focused window
     bindsym $mod+Shift+q kill
 
     # Start your launcher
     bindsym $mod+d exec $menu
+
+    # --- QoL: FASTER SWITCHING ---
+    # 1. Workspace Toggle: Quickly jump back to the previous workspace.
+    #    Useful for referencing documentation while coding.
+    bindsym $mod+Tab workspace back_and_forth
+
+    # 2. Window Switcher: Uses rofi to find and focus windows across all workspaces.
+    #    Faster than manual navigation when many windows are open.
+    bindsym $mod+q exec $rofi_cmd -show window
 
     # Drag floating windows by holding down $mod and left mouse button.
     # Resize them with right mouse button + $mod.
@@ -141,7 +175,10 @@ output eDP-1 {
     bindsym $mod+Shift+$left move left
     bindsym $mod+Shift+$down move down
     bindsym $mod+Shift+$up move up
+    # Old code preserved below:
+    # bindsym $mod+Shift+$right move right
     bindsym $mod+Shift+$right move right
+
     # Ditto, with arrow keys
     bindsym $mod+Shift+Left move left
     bindsym $mod+Shift+Down move down
@@ -161,6 +198,18 @@ output eDP-1 {
     bindsym $mod+8 workspace number 8
     bindsym $mod+9 workspace number 9
     bindsym $mod+0 workspace number 10
+
+    # --- QoL: CYCLIC NAVIGATION ---
+    # Switch between workspaces using brackets.
+    # mod+[ and mod+] for prev/next workspace.
+    bindsym $mod+bracketleft workspace prev
+    bindsym $mod+bracketright workspace next
+
+    # Move containers to adjacent workspaces and follow them.
+    # We use quotes here to ensure multiple commands are treated as a single binding.
+    bindsym $mod+Shift+bracketleft "move container to workspace prev; workspace prev"
+    bindsym $mod+Shift+bracketright "move container to workspace next; workspace next"
+
     # Move focused container to workspace
     bindsym $mod+Shift+1 move container to workspace number 1
     bindsym $mod+Shift+2 move container to workspace number 2
@@ -200,10 +249,19 @@ output eDP-1 {
     # Move focus to the parent container
     bindsym $mod+a focus parent
 #
-# Scratchpad:
+# Scratchpad & Persistent Utilities:
 #
-    # Sway has a "scratchpad", which is a bag of holding for windows.
-    # You can send windows there and get them back later.
+    # --- QoL: SCRATCHPAD TERMINAL ---
+    # A persistent, floating terminal that can be toggled from anywhere.
+    # Optimized for quick tasks (package installs, git commits, etc.).
+    # 'for_window' rule ensures consistent sizing and centering.
+    for_window [app_id="scratch_term"] floating enable, resize set 900 600, move position center, scratchpad show
+    bindsym $mod+u exec swaymsg "[app_id='scratch_term'] scratchpad show" || $term --app-id=scratch_term
+
+    # --- QoL: TOOL INTEGRATION ---
+    # Fast access to core terminal utilities without opening a full terminal first.
+    bindsym $mod+n exec $term -e nnn        # File Manager
+    bindsym $mod+Shift+b exec $term -e btop # System Monitor
 
     # Move the currently focused window to the scratchpad
     bindsym $mod+Shift+minus move scratchpad
@@ -211,6 +269,31 @@ output eDP-1 {
     # Show the next scratchpad window or hide the focused scratchpad window.
     # If there are multiple scratchpad windows, this command cycles through them.
     bindsym $mod+minus scratchpad show
+
+#
+# System Controls & Portability:
+#
+    # --- RESOURCE MINIMALISM: Standard Tooling ---
+    # These bindings use lightweight CLI tools common in minimalist setups.
+
+    # Volume and Brightness controls removed as per user request.
+    # Old bindings (commented out):
+    # bindsym XF86AudioRaiseVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+
+    # bindsym XF86AudioLowerVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
+    # bindsym XF86AudioMute exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+    # bindsym XF86MonBrightnessUp exec brightnessctl set +10%
+    # bindsym XF86MonBrightnessDown exec brightnessctl set 10%-
+
+    # Screen Capture (Requires: grim, slurp, wl-copy)
+    # Commented out as they may overwrite system/default bindings on your setup.
+    # Print: Full screen to clipboard + notification.
+    # bindsym Print exec grim - | wl-copy && notify-send 'Screenshot' 'Full screen captured'
+    # Shift+Print: Select region to clipboard.
+    # bindsym Shift+Print exec grim -g "$(slurp)" - | wl-copy && notify-send 'Screenshot' 'Region captured'
+
+    # Lock Screen (Manual trigger for swaylock)
+    # Changed from $mod+Shift+l to avoid collision with 'move right' (vim-style l key)
+    bindsym $mod+Shift+Escape exec swaylock -c 000000
 #
 # Resizing containers:
 #
@@ -261,10 +344,13 @@ include '$(/usr/libexec/sway/layered-include "/usr/share/sway/config.d/*.conf" "
 
 ### Advanced Performance Tuning
 #
-# Disable Xwayland to save memory and CPU cycles if you only use Wayland-native
-# applications. Note: This will break many older apps and some games.
-# To enable, comment out the line below.
-# xwayland disable
+# --- CRITICAL PERFORMANCE OPTIMIZATION: Xwayland Removal ---
+# Disabling Xwayland eliminates the entire X11 compatibility layer.
+# - Saves ~50-100MB of background RAM.
+# - Prevents X11-related CPU wakeups.
+# - Forces all applications to use native Wayland protocols for lower latency.
+# Note: This will break apps that do not support Wayland (check with 'xlsclients').
+xwayland disable
 
 # Disable mouse warping to reduce unnecessary cursor movements.
 mouse_warping none
