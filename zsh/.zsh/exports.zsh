@@ -13,12 +13,6 @@ export VISUAL='nvim'
 # --- Path Modifications ---
 # User local bin
 export PATH="$HOME/.local/bin:$PATH"
-# --- NPM global packages ---
-export PATH="$HOME/.npm-global/bin:$PATH"
-
-# --- Nix ---
-# Enable experimental features for the modern Nix CLI (nix profile, flakes)
-export NIX_CONFIG="experimental-features = nix-command flakes"
 
 # --- NNN Configuration ---
 # Plugins:
@@ -42,7 +36,6 @@ export NNN_FCOLORS='c1e2272e006033f7c6d6abc4' # Gruvbox-friendly coloring using 
 # This ensures hardware acceleration is used for UI rendering and video playback,
 # significantly reducing CPU overhead on high-refresh (120Hz) displays.
 
-export MOZ_ENABLE_WAYLAND=1             # Forces Firefox to use native Wayland
 export QT_QPA_PLATFORM=wayland          # Forces Qt5/Qt6 apps (VLC, OBS, etc.) to use Wayland
 export CLUTTER_BACKEND=wayland         # Forces Clutter-based apps to use Wayland
 export SDL_VIDEODRIVER=wayland          # Forces SDL2 games/apps to use Wayland

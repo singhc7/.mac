@@ -16,15 +16,13 @@ if command -v eza >/dev/null 2>&1; then
     alias l.='eza -d .* --icons --group-directories-first'
 fi
 
-# --- Package Management (pacman & Nix{through lix}) ---
+# --- Package Management (pacman) ---
 # Update system and user packages with proper guard rails
 # pacman
 #  -S : Sync operations (interact with remote repository databases)
 #  -y : Refresh (download fresh copies of the master package databases from servers)
 #  -u : Sysupgrade (compare local packages to the fresh databases and upgrade them)
-alias upsystem='{ command -v pacman >/dev/null 2>&1 && sudo pacman -Syu || true } && \
-                  { command -v nix >/dev/null 2>&1 && nix profile upgrade --all || true } && \
-                  { command -v nix-channel >/dev/null 2>&1 && nix-channel --update || true }'
+alias upsystem='command -v pacman >/dev/null 2>&1 && sudo pacman -Syu'
 
 # Clean up system caches and unused packages
 # pacman -Qdtq
@@ -44,18 +42,7 @@ alias upsystem='{ command -v pacman >/dev/null 2>&1 && sudo pacman -Syu || true 
 # pacman -Sc
 #  -S : Sync operations (cache management is categorized under sync commands)
 #  -c : Clean (a single 'c' removes cached packages that are no longer installed)
-alias clsystem='{ command -v pacman >/dev/null 2>&1 && pacman -Qdtq | sudo pacman -Rns - && sudo pacman -Sc || true } && \
-                    { command -v nix-collect-garbage >/dev/null 2>&1 && nix-collect-garbage -d || true }'
-
-# Nix shorthand for common operations
-if command -v nix >/dev/null 2>&1; then
-    alias ns="nix-shell"
-    alias np="nix profile"
-    alias ni="nix profile install" # Shorthand to install from nixpkgs
-    alias nu="nix profile upgrade"
-    alias nr="nix profile remove"
-    alias nls="nix profile list"
-fi
+alias clsystem='command -v pacman >/dev/null 2>&1 && pacman -Qdtq | sudo pacman -Rns - && sudo pacman -Sc'
 
 # --- Rclone Power Tools ---
 if command -v rclone >/dev/null 2>&1; then
