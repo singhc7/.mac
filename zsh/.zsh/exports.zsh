@@ -2,10 +2,6 @@
 # Environment Variables & Exports
 # ==========================================
 
-# --- SSH Agent (Manual Background Service) ---
-# Point SSH_AUTH_SOCK to the socket managed by the background ssh-agent.
-export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
-
 # --- Editor ---
 export EDITOR='nvim'
 export VISUAL='nvim'
@@ -13,6 +9,9 @@ export VISUAL='nvim'
 # --- Path Modifications ---
 # User local bin
 export PATH="$HOME/.local/bin:$PATH"
+
+# Homebrew package manager
+export PATH="$HOME/homebrew/bin:$PATH"
 
 # --- NNN Configuration ---
 # Plugins:
@@ -39,3 +38,6 @@ export RCLONE_BUFFER_SIZE=64M         # Larger memory buffer for smoother stream
 export RCLONE_DRIVE_USE_TRASH=true    # GDrive specific: safety first
 export RCLONE_FAST_LIST=true          # Drastically reduces API calls for syncs
 export RCLONE_VFS_CACHE_MODE=writes   # Enables basic file caching for mounts
+
+# --- Homebrew ---
+export HOMEBREW_CASK_OPTS="--appdir=~/Applications"

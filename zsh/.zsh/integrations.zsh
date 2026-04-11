@@ -19,3 +19,7 @@ if command -v zoxide >/dev/null 2>&1; then
     # Optimization: Limit the frequency of database cleanup
     export _ZO_MAXAGE=10000
 fi
+
+# --- ssh-agent ---
+# Add passkey to the ssh-agent on each shell instance
+ssh-add --apple-load-keychain 2>/dev/null

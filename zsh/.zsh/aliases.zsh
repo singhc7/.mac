@@ -16,12 +16,6 @@ if command -v eza >/dev/null 2>&1; then
     alias l.='eza -d .* --icons --group-directories-first'
 fi
 
-# --- Package Management (dnf) ---
-alias upsystem='command -v dnf >/dev/null 2>&1 && sudo dnf upgrade'
-
-# Clean up system caches and unused packages
-alias clsystem='command -v dnf >/dev/null 2>&1 && sudo dnf autoremove && sudo dnf clean all'
-
 # --- Rclone Power Tools ---
 if command -v rclone >/dev/null 2>&1; then
     # Optimized mount (high-performance VFS caching)
