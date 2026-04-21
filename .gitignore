@@ -29,6 +29,7 @@ gh/hosts.yml
 *~
 .viminfo
 .zsh_plugins.zsh
+*.bak
 
 # =========================
 # Tool Specific Caches
