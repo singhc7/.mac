@@ -9,7 +9,7 @@ add_newline = true
 
 # Prompt format (2-line: info on top, input on bottom)
 format = """
-$os$directory$git_branch$git_status$python$rust$nodejs$java$c$lua$package$cmd_duration
+$os$directory$git_branch$git_status$git_state$git_metrics$python$rust$nodejs$java$c$lua$package$jobs$cmd_duration
 $character"""
 
 [os]
@@ -30,6 +30,7 @@ symbol = " "
 style = "bold purple"
 
 [git_status]
+format = '($all_status$ahead_behind )'
 style = "bold red"
 ahead = " "
 behind = " "
@@ -37,6 +38,25 @@ diverged = " "
 modified = " "
 staged = " "
 untracked = " "
+
+[git_state]
+style = "bold yellow"
+rebase = "rebasing"
+merge = "merging"
+revert = "reverting"
+cherry_pick = "cherry-picking"
+bisect = "bisecting"
+
+[git_metrics]
+disabled = false
+added_style = "bold green"
+deleted_style = "bold red"
+format = "([+$added]($added_style) )([-$deleted]($deleted_style) )"
+
+[jobs]
+symbol = "󰜎 "
+style = "bold cyan"
+threshold = 1
 
 [character]
 success_symbol = "[](bold green)"
