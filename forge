@@ -4,6 +4,19 @@ set -euo pipefail
 # forge — Bootstrap a fresh macOS environment from dotfiles
 # Usage: forge [--dry-run]
 
+if [[ "${1:-}" == "-h" || "${1:-}" == "--help" ]]; then
+    echo "Usage: forge [--dry-run]"
+    echo ""
+    echo "Bootstrap a fresh macOS environment from dotfiles."
+    echo "Installs Homebrew packages, deploys configs via GNU Stow,"
+    echo "and sets up Antidote, Borg, and Neovim."
+    echo ""
+    echo "Options:"
+    echo "  --dry-run   Print what would be done without making changes"
+    echo "  -h, --help  Show this help"
+    exit 0
+fi
+
 DRY_RUN=false
 [[ "${1:-}" == "--dry-run" ]] && DRY_RUN=true
 
@@ -39,64 +52,16 @@ else
 fi
 
 # ==========================================
-# 2. Core Packages
+# 2. Core Packages (via Brewfile)
 # ==========================================
-BREW_FORMULAE=(
-    # Shell & Prompt
-    zsh
-    starship
+DOTFILES_DIR="$(cd "$(dirname "$0")" && pwd)"
 
-    # Terminal
-    kitty
-
-    # Editor
-    neovim
-
-    # File Management & Search
-    fd
-    fzf
-    bat
-    eza
-    zoxide
-    ripgrep
-    tealdeer
-
-    # Multiplexer
-    tmux
-
-    # Git
-    git
-    pre-commit
-
-    # Downloads & Media
-    aria2
-    yt-dlp
-    mpv
-
-    # Cloud & Backup
-    rclone
-    borgbackup
-
-    # Dev Tools
-    yamllint
-    direnv
-    stow
-)
-
-info "Installing Homebrew formulae..."
-for formula in "${BREW_FORMULAE[@]}"; do
-    if brew list "$formula" &>/dev/null; then
-        ok "$formula already installed"
-    else
-        info "Installing $formula..."
-        run brew install "$formula"
-    fi
-done
+info "Installing Homebrew formulae from Brewfile..."
+run brew bundle --file="$DOTFILES_DIR/Brewfile"
 
 # ==========================================
 # 3. GNU Stow — Deploy Dotfiles
 # ==========================================
-DOTFILES_DIR="$(cd "$(dirname "$0")/../../../" && pwd)"
 
 STOW_PACKAGES=(
     zsh
@@ -137,13 +102,25 @@ else
 fi
 
 # ==========================================
-# 5. Neovim — Mason handles LSPs/tools
+# 5. Borg Backup Repository
+# ==========================================
+BORG_REPO="$HOME/keepass-backups"
+if [[ ! -d "$BORG_REPO" ]]; then
+    info "Initializing Borg backup repository at $BORG_REPO..."
+    run borg init --encryption=repokey "$BORG_REPO"
+    ok "Borg repository initialized (save the passphrase somewhere safe!)"
+else
+    ok "Borg repository already exists at $BORG_REPO"
+fi
+
+# ==========================================
+# 6. Neovim — Mason handles LSPs/tools
 # ==========================================
 info "Neovim LSP servers and tools are managed by Mason."
 info "Open nvim and run :Mason to verify installed tools."
 
 # ==========================================
-# 6. Post-install
+# 7. Post-install
 # ==========================================
 echo ""
 ok "Forge complete!"
