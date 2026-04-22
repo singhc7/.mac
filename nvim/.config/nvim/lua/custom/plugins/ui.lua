@@ -1,16 +1,11 @@
 return {
   {
-    'folke/tokyonight.nvim',
+    'Mofiqul/adwaita.nvim',
     lazy = false, -- load at start
     priority = 1000, -- load first
-    opts = {
-      style = 'night',
-      transparent = false,
-      terminal_colors = true,
-    },
-    config = function(_, opts)
-      require('tokyonight').setup(opts)
-      vim.cmd [[colorscheme tokyonight]]
+    config = function()
+      vim.g.adwaita_darker = true
+      vim.cmd [[colorscheme adwaita]]
     end,
   },
 
@@ -33,7 +28,7 @@ return {
       -- no need to also show mode in cmd line when we have bar
       vim.o.showmode = false
       vim.g.lightline = {
-        colorscheme = 'tokyonight',
+        colorscheme = 'one',
         active = {
           left = {
             { 'mode', 'paste' },
