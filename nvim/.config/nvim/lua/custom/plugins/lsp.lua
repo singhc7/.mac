@@ -103,6 +103,9 @@ return {
         pyright = {},
         ruff = {},
         bashls = {},
+        yamlls = {},
+        jsonls = {},
+        marksman = {},
         clangd = {
           -- Allow attaching to single files by falling back to current directory
           root_markers = { '.git', 'compile_commands.json', 'compile_flags.txt', '.' },
@@ -150,6 +153,8 @@ return {
         'shfmt',
         'google-java-format',
         'clang-format',
+        'jq',
+        'prettier',
       }
 
       local ensure_installed = vim.tbl_keys(servers or {})
