@@ -16,6 +16,7 @@ help: ## Show this help
 
 stow: ## Stow a package (PKG=name) or all packages
 ifdef PKG
+	@test -d "$(DOTFILES_DIR)/$(PKG)" || { echo "Error: package '$(PKG)' not found"; exit 1; }
 	stow -d $(DOTFILES_DIR) -t $(HOME_DIR) $(PKG)
 else
 	@for pkg in $(PACKAGES); do \
@@ -26,6 +27,7 @@ endif
 
 unstow: ## Unstow a package (PKG=name) or all packages
 ifdef PKG
+	@test -d "$(DOTFILES_DIR)/$(PKG)" || { echo "Error: package '$(PKG)' not found"; exit 1; }
 	stow -d $(DOTFILES_DIR) -t $(HOME_DIR) -D $(PKG)
 else
 	@for pkg in $(PACKAGES); do \
