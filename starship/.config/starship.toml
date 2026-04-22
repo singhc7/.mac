@@ -1,0 +1,76 @@
+# Starship Prompt Configuration
+# Docs: https://starship.rs/config/
+
+# Timeout for commands that starship executes
+command_timeout = 1000
+
+# Newline between prompts
+add_newline = true
+
+# Prompt format (2-line: info on top, input on bottom)
+format = """
+$os$directory$git_branch$git_status$python$rust$nodejs$java$c$lua$package$cmd_duration
+$character"""
+
+[os]
+disabled = false
+style = "bold white"
+
+[os.symbols]
+Macos = " "
+
+[directory]
+truncation_length = 4
+truncate_to_repo = true
+style = "bold blue"
+read_only = " 󰌾"
+
+[git_branch]
+symbol = " "
+style = "bold purple"
+
+[git_status]
+style = "bold red"
+ahead = " "
+behind = " "
+diverged = " "
+modified = " "
+staged = " "
+untracked = " "
+
+[character]
+success_symbol = "[](bold green)"
+error_symbol = "[](bold red)"
+vimcmd_symbol = "[](bold cyan)"
+
+[cmd_duration]
+min_time = 2000
+format = "took [$duration](bold yellow) "
+
+[python]
+symbol = " "
+style = "bold yellow"
+
+[rust]
+symbol = "󱘗 "
+style = "bold red"
+
+[nodejs]
+symbol = " "
+style = "bold green"
+
+[java]
+symbol = " "
+style = "bold red"
+
+[c]
+symbol = " "
+style = "bold blue"
+
+[lua]
+symbol = " "
+style = "bold blue"
+
+[package]
+symbol = "󰏗 "
+disabled = true

@@ -1,8 +1,3 @@
-# 1. Powerlevel10k Instant Prompt (Must be at the very top)
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${USER}.zsh" ]]; then
-    source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${USER}.zsh"
-fi
-
 # ==========================================
 # Antidote Bootstrap & Load
 # ==========================================
@@ -12,14 +7,11 @@ if [[ ! -d ~/.antidote ]]; then
     git clone --depth=1 https://github.com/mattmc3/antidote.git ~/.antidote
 fi
 
-# 2. Load Antidote (Your Plugin Manager)
+# Load Antidote (Your Plugin Manager)
 source ${ZDOTDIR:-~}/.antidote/antidote.zsh
 
-# 3. Load your plugins (Includes Powerlevel10k, Autosuggestions, etc.)
+# Load your plugins (Autosuggestions, Completions, etc.)
 antidote load
-
-# 4. Load Powerlevel10k Visual Settings
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # ==========================================
 # Modular Configurations
