@@ -39,3 +39,21 @@ vim.api.nvim_create_autocmd('Filetype', {
   group = text,
   command = 'setlocal spell tw=80 colorcolumn=81',
 })
+
+-- Auto-resize splits when terminal window is resized
+vim.api.nvim_create_autocmd('VimResized', {
+  desc = 'Equalize splits on terminal resize',
+  group = vim.api.nvim_create_augroup('auto-resize-splits', { clear = true }),
+  command = 'wincmd =',
+})
+
+-- Trim trailing whitespace on save
+vim.api.nvim_create_autocmd('BufWritePre', {
+  desc = 'Remove trailing whitespace on save',
+  group = vim.api.nvim_create_augroup('trim-whitespace', { clear = true }),
+  callback = function()
+    local pos = vim.api.nvim_win_get_cursor(0)
+    vim.cmd [[%s/\s\+$//e]]
+    vim.api.nvim_win_set_cursor(0, pos)
+  end,
+})
