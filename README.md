@@ -25,7 +25,7 @@ Before deploying, ensure the following are installed on your system:
 
 2. **Run the bootstrap script** to install all dependencies and deploy configs:
 
-        ./scripts/.local/bin/forge
+        ./forge
 
    Use `forge --dry-run` to preview what would be installed without making changes.
 
