@@ -5,6 +5,9 @@ A minimalist, personal collection of configuration files optimized for a resourc
 ## Overview
 This repository manages my core terminal environment and tooling configurations. It relies on [GNU Stow](https://www.gnu.org/software/stow/) to handle symlinking these configuration files directly into the home directory, keeping the system clean and the dotfiles easily version-controlled.
 
+**Primary terminal:** Kitty (Adwaita darker theme) | **Prompt:** Starship | **Editor:** Neovim
+
+> The `alacritty/` directory is kept as an archived configuration. Kitty is the actively maintained terminal emulator.
 
 ## Prerequisites
 Before deploying, ensure the following are installed on your system:
@@ -13,15 +16,25 @@ Before deploying, ensure the following are installed on your system:
 
 ## Installation
 
+### Quick Start (Recommended)
+
 1. **Clone the repository** into your home directory:
 
         git clone https://github.com/singhc7/.mac.git ~/.dotfiles
         cd ~/.dotfiles
 
-2. **Deploy configurations** using Stow. Run this command for each piece of software you want to configure:
+2. **Run the bootstrap script** to install all dependencies and deploy configs:
+
+        ./scripts/.local/bin/forge
+
+   Use `forge --dry-run` to preview what would be installed without making changes.
+
+### Manual Deployment
+
+Deploy individual configurations using Stow:
 
         stow zsh
-        stow alacritty
+        stow kitty
 
 *Note: Stow will automatically create symlinks from the folders in this repository to their appropriate locations in your home directory.*
 
