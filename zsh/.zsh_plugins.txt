@@ -2,5 +2,6 @@
 mattmc3/antidote
 
 # The Efficiency Tools (Fish-like features)
+zsh-users/zsh-completions
 zsh-users/zsh-syntax-highlighting
 zsh-users/zsh-autosuggestions
