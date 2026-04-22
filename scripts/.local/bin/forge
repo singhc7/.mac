@@ -1,0 +1,155 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# forge — Bootstrap a fresh macOS environment from dotfiles
+# Usage: forge [--dry-run]
+
+DRY_RUN=false
+[[ "${1:-}" == "--dry-run" ]] && DRY_RUN=true
+
+# Colors
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+CYAN='\033[0;36m'
+NC='\033[0m'
+
+info()  { echo -e "${CYAN}[INFO]${NC} $*"; }
+ok()    { echo -e "${GREEN}[OK]${NC} $*"; }
+warn()  { echo -e "${YELLOW}[WARN]${NC} $*"; }
+err()   { echo -e "${RED}[ERROR]${NC} $*"; }
+
+run() {
+    if $DRY_RUN; then
+        echo -e "${YELLOW}[DRY-RUN]${NC} $*"
+    else
+        "$@"
+    fi
+}
+
+# ==========================================
+# 1. Homebrew
+# ==========================================
+info "Checking for Homebrew..."
+if ! command -v brew >/dev/null 2>&1; then
+    info "Installing Homebrew..."
+    run /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+else
+    ok "Homebrew already installed"
+fi
+
+# ==========================================
+# 2. Core Packages
+# ==========================================
+BREW_FORMULAE=(
+    # Shell & Prompt
+    zsh
+    starship
+
+    # Terminal
+    kitty
+
+    # Editor
+    neovim
+
+    # File Management & Search
+    fd
+    fzf
+    bat
+    eza
+    zoxide
+    ripgrep
+    tealdeer
+
+    # Multiplexer
+    tmux
+
+    # Git
+    git
+    pre-commit
+
+    # Downloads & Media
+    aria2
+    yt-dlp
+    mpv
+
+    # Cloud & Backup
+    rclone
+    borgbackup
+
+    # Dev Tools
+    yamllint
+    direnv
+    stow
+)
+
+info "Installing Homebrew formulae..."
+for formula in "${BREW_FORMULAE[@]}"; do
+    if brew list "$formula" &>/dev/null; then
+        ok "$formula already installed"
+    else
+        info "Installing $formula..."
+        run brew install "$formula"
+    fi
+done
+
+# ==========================================
+# 3. GNU Stow — Deploy Dotfiles
+# ==========================================
+DOTFILES_DIR="$(cd "$(dirname "$0")/../../../" && pwd)"
+
+STOW_PACKAGES=(
+    zsh
+    git
+    kitty
+    nvim
+    tmux
+    fzf
+    eza
+    mpv
+    aria2
+    yt-dlp
+    tealdeer
+    scripts
+    starship
+)
+
+info "Deploying dotfiles with GNU Stow from $DOTFILES_DIR..."
+for pkg in "${STOW_PACKAGES[@]}"; do
+    if [[ -d "$DOTFILES_DIR/$pkg" ]]; then
+        info "Stowing $pkg..."
+        run stow -d "$DOTFILES_DIR" -t "$HOME" "$pkg"
+        ok "$pkg deployed"
+    else
+        warn "Package $pkg not found in $DOTFILES_DIR, skipping"
+    fi
+done
+
+# ==========================================
+# 4. Zsh Plugin Manager (Antidote)
+# ==========================================
+info "Checking for Antidote (zsh plugin manager)..."
+if [[ ! -d "$HOME/.antidote" ]]; then
+    info "Installing Antidote..."
+    run git clone --depth=1 https://github.com/mattmc3/antidote.git "$HOME/.antidote"
+else
+    ok "Antidote already installed"
+fi
+
+# ==========================================
+# 5. Neovim — Mason handles LSPs/tools
+# ==========================================
+info "Neovim LSP servers and tools are managed by Mason."
+info "Open nvim and run :Mason to verify installed tools."
+
+# ==========================================
+# 6. Post-install
+# ==========================================
+echo ""
+ok "Forge complete!"
+info "Remaining manual steps:"
+echo "  1. Set zsh as default shell:  chsh -s \$(which zsh)"
+echo "  2. Open a new terminal to load all configs"
+echo "  3. Run 'nvim' to trigger lazy.nvim plugin installation"
+echo "  4. Run 'pre-commit install' inside the dotfiles repo"
+echo "  5. Configure rclone remotes: rclone config"
