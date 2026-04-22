@@ -17,8 +17,11 @@ if command -v eza >/dev/null 2>&1; then
     alias ls='eza --icons --group-directories-first'
     alias ll='eza -lh --icons --git --group-directories-first'
     alias la='eza -lha --icons --git --group-directories-first'
-    alias lt='eza --tree --icons --group-directories-first'
+    alias lt='eza --tree --level=2 --icons --group-directories-first'
+    alias lt3='eza --tree --level=3 --icons --group-directories-first'
     alias l.='eza -d .* --icons --group-directories-first'
+    alias lss='eza -lh --icons --git --group-directories-first --sort=size'
+    alias lsm='eza -lh --icons --git --group-directories-first --sort=modified'
 fi
 
 # --- Rclone Power Tools ---
