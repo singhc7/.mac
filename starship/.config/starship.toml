@@ -2,7 +2,7 @@
 # Docs: https://starship.rs/config/
 
 # Timeout for commands that starship executes
-command_timeout = 500
+command_timeout = 300
 
 # Newline between prompts
 add_newline = true
