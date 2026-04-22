@@ -17,9 +17,10 @@ if command -v fd > /dev/null; then
     export FZF_ALT_C_COMMAND='fd --type d --strip-cwd-prefix --hidden --follow --exclude .git'
 fi
 
-# Preview command using bat (if available)
+# Preview command using bat (if available) — scoped to Ctrl+T only
+# so it doesn't error on directory pickers like Alt+C
 if command -v bat > /dev/null; then
-    export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --preview 'bat --color=always --style=numbers --line-range :500 {}'"
+    export FZF_CTRL_T_OPTS="--preview 'bat --color=always --style=numbers --line-range :500 {}'"
 fi
 
 # ==========================================
@@ -49,13 +50,6 @@ fe() {
   local files
   IFS=$'\n' files=($(fzf --query="$1" --multi --select-1 --exit-0))
   [[ -n "$files" ]] && ${EDITOR:-nvim} "${files[@]}"
-}
-
-# fcd - cd into the selected directory
-fcd() {
-  local dir
-  dir=$(fd --type d --hidden --follow --exclude .git . ${1:-.} | fzf +m) &&
-  cd "$dir"
 }
 
 # fh - search through shell history and put selection on command line
