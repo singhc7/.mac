@@ -32,9 +32,9 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     [[ -f /usr/share/fzf/shell/key-bindings.zsh ]] && source /usr/share/fzf/shell/key-bindings.zsh
     [[ -f /usr/share/fzf/shell/completion.zsh ]] && source /usr/share/fzf/shell/completion.zsh
 elif [[ "$OSTYPE" == "darwin"* ]]; then
-    # Homebrew location
-    if command -v brew > /dev/null; then
-        BREW_PREFIX=$(brew --prefix)
+    # Homebrew location (derive prefix from binary path to avoid slow brew --prefix)
+    if (( $+commands[brew] )); then
+        BREW_PREFIX="${commands[brew]:h:h}"
         [[ -f "$BREW_PREFIX/opt/fzf/shell/key-bindings.zsh" ]] && source "$BREW_PREFIX/opt/fzf/shell/key-bindings.zsh"
         [[ -f "$BREW_PREFIX/opt/fzf/shell/completion.zsh" ]] && source "$BREW_PREFIX/opt/fzf/shell/completion.zsh"
     fi
@@ -67,16 +67,29 @@ fps() {
   fi
 }
 
-# fgitlog - checkout git commit
+# fgitlog - browse git log and copy selected hash to clipboard
 fgl() {
   local commits
   commits=$(git log --graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@" | \
     fzf --ansi --no-sort --reverse --multi --bind 'ctrl-s:toggle-sort' \
-        --header 'Press CTRL-S to toggle sort' \
+        --header 'CTRL-S toggle sort | ENTER copies hash' \
         --preview 'git show --color=always $(echo {} | grep -o "[a-f0-9]\{7\}" | head -1)' \
         --preview-window=right:60%)
   if [ -n "$commits" ]; then
     local commit=$(echo "$commits" | grep -o "[a-f0-9]\{7\}" | head -1)
-    git checkout "$commit"
+    echo "$commit" | tr -d '\n' | pbcopy
+    echo "Copied $commit to clipboard"
+  fi
+}
+
+# fgb - fuzzy switch git branch
+fgb() {
+  local branch
+  branch=$(git branch --all --sort=-committerdate --format='%(refname:short)' | \
+    fzf --reverse --preview 'git log --oneline --graph --color=always -20 {1}' \
+        --header 'Switch branch')
+  if [ -n "$branch" ]; then
+    # Strip remotes/origin/ prefix for remote branches
+    git checkout "${branch#remotes/origin/}"
   fi
 }
