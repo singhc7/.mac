@@ -15,8 +15,24 @@
 	default = simple
 [pull]
 	rebase = true
+[rebase]
+	autostash = true
 [core]
 	editor = nvim
+[diff]
+	tool = nvimdiff
+[difftool]
+	prompt = false
+[difftool "nvimdiff"]
+	cmd = nvim -d "$LOCAL" "$REMOTE"
+[merge]
+	tool = nvimdiff
+	conflictstyle = zdiff3
+[mergetool]
+	prompt = false
+	keepBackup = false
+[mergetool "nvimdiff"]
+	cmd = nvim -d "$LOCAL" "$MERGED" "$REMOTE"
 [alias]
 	st = status -sb
 	co = checkout
