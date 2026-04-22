@@ -2,14 +2,14 @@
 # Docs: https://starship.rs/config/
 
 # Timeout for commands that starship executes
-command_timeout = 1000
+command_timeout = 500
 
 # Newline between prompts
 add_newline = true
 
 # Prompt format (2-line: info on top, input on bottom)
 format = """
-$os$directory$git_branch$git_status$git_state$git_metrics$python$rust$nodejs$java$c$lua$package$jobs$cmd_duration
+$os$directory$git_branch$git_status$git_state$python$java$package$jobs$cmd_duration
 $character"""
 
 [os]
@@ -48,10 +48,7 @@ cherry_pick = "cherry-picking"
 bisect = "bisecting"
 
 [git_metrics]
-disabled = false
-added_style = "bold green"
-deleted_style = "bold red"
-format = "([+$added]($added_style) )([-$deleted]($deleted_style) )"
+disabled = true
 
 [jobs]
 symbol = "󰜎 "
@@ -72,24 +69,20 @@ symbol = " "
 style = "bold yellow"
 
 [rust]
-symbol = "󱘗 "
-style = "bold red"
+disabled = true
 
 [nodejs]
-symbol = " "
-style = "bold green"
+disabled = true
 
 [java]
 symbol = " "
 style = "bold red"
 
 [c]
-symbol = " "
-style = "bold blue"
+disabled = true
 
 [lua]
-symbol = " "
-style = "bold blue"
+disabled = true
 
 [package]
 symbol = "󰏗 "
