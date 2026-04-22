@@ -2,11 +2,12 @@
 # ==========================================
 # 1. Environment Variables
 # ==========================================
-# UI Styling (Gruvbox Dark colors)
+# UI Styling (Adwaita darker — matches kitty theme)
 export FZF_DEFAULT_OPTS=" \
---color=bg+:#3c3836,bg:#1d2021,spinner:#8ec07c,hl:#fb4934 \
---color=fg:#ebdbb2,header:#fb4934,info:#fabd2f,pointer:#8ec07c \
---color=marker:#8ec07c,fg+:#ebdbb2,prompt:#fabd2f,hl+:#fb4934 \
+--color=fg:#deddda,bg:#000000,hl:#62a0ea \
+--color=fg+:#f6f5f4,bg+:#1c1c1c,hl+:#99c1f1 \
+--color=info:#5bc8af,prompt:#57e389,pointer:#ed333b \
+--color=marker:#57e389,spinner:#9141ac,header:#9a9996 \
 --multi --height 40% --layout=reverse --border --prompt='λ ' --pointer='▶' --marker='✓'"
 
 # Use fd instead of find (if available) for better performance and respecting .gitignore
