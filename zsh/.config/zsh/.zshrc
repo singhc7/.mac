@@ -8,7 +8,7 @@ if [[ ! -d ~/.antidote ]]; then
 fi
 
 # Load Antidote (Your Plugin Manager)
-source ${ZDOTDIR:-~}/.antidote/antidote.zsh
+source ~/.antidote/antidote.zsh
 
 # Load your plugins (Autosuggestions, Completions, etc.)
 antidote load
@@ -16,10 +16,9 @@ antidote load
 # ==========================================
 # Modular Configurations
 # ==========================================
-# Use ~/.zsh if it exists (standard Stow behavior)
-ZSH_CONFIG_DIR="$HOME/.zsh"
+ZSH_CONFIG_DIR="$ZDOTDIR/.zsh"
 
-# If ~/.zsh doesn't exist, fall back to the relative path of this script
+# Fallback: resolve relative to this script if ZDOTDIR isn't set
 if [[ ! -d "$ZSH_CONFIG_DIR" ]]; then
     ZSH_CONFIG_DIR="${${(%):-%x}:h}/.zsh"
 fi

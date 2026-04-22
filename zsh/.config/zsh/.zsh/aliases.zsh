@@ -40,3 +40,14 @@ if command -v rclone >/dev/null 2>&1; then
     # Interactive remote file explorer
     alias rcls='rclone lsjson --human-readable --stat'
 fi
+
+# --- Navigation ---
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+
+# --- Quick Info ---
+alias path='echo $PATH | tr ":" "\n"'
+alias ports='lsof -iTCP -sTCP:LISTEN -n -P'
+alias ip='curl -s ifconfig.me'
+alias weather='curl -s wttr.in'
