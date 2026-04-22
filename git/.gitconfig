@@ -1,7 +1,7 @@
 [commit]
 	gpgsign = true
 [user]
-	signingkey = "~/.ssh/id_ed25519.pub"
+	signingkey = "~/.ssh/id_ed25519"
 	name = Chahat
 	email = chahat@disroot.org
 [gpg]
@@ -52,3 +52,7 @@
 	cleanup = !git branch --merged main | grep -v main | xargs git branch -d
 	recent = branch --sort=-committerdate --format='%(committerdate:relative)%09%(refname:short)'
 	fixup = commit --fixup
+
+# Use different email for work repos (uncomment and adjust path)
+# [includeIf "gitdir:~/work/"]
+#	path = ~/.config/git/work
