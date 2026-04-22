@@ -9,7 +9,7 @@ add_newline = true
 
 # Prompt format (2-line: info on top, input on bottom)
 format = """
-$os$directory$git_branch$git_status$git_state$python$java$package$jobs$cmd_duration
+$os$directory$git_branch$git_status$git_state$python$java$package$fill$jobs$cmd_duration$shell
 $character"""
 
 [os]
@@ -83,6 +83,16 @@ disabled = true
 
 [lua]
 disabled = true
+
+[fill]
+symbol = " "
+
+[shell]
+disabled = false
+zsh_indicator = ""
+bash_indicator = " bash"
+fish_indicator = " fish"
+style = "bold yellow"
 
 [package]
 symbol = "󰏗 "
