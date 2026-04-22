@@ -1,13 +1,6 @@
 # ==========================================
-# Antidote Bootstrap & Load
+# Antidote Load (installed by forge)
 # ==========================================
-# If Antidote isn't installed, clone it automatically
-if [[ ! -d ~/.antidote ]]; then
-    echo "Installing Antidote..."
-    git clone --depth=1 https://github.com/mattmc3/antidote.git ~/.antidote
-fi
-
-# Load Antidote (Your Plugin Manager)
 source ~/.antidote/antidote.zsh
 
 # Load your plugins (Autosuggestions, Completions, etc.)
