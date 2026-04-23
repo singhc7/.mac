@@ -34,6 +34,9 @@ if command -v rclone >/dev/null 2>&1; then
                            --vfs-read-chunk-size-limit 1G \
                            --daemon'
 
+    # Copy with progress and checksums
+    alias rccp='rclone copy -P --check-first'
+
     # Fast and safe mirror sync
     alias rcsync='rclone sync -P --track-renames --fix-case'
 
