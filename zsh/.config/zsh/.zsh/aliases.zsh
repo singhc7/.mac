@@ -43,8 +43,17 @@ if command -v rclone >/dev/null 2>&1; then
     # Dry-run sync (preview what would change)
     alias rcsync-dry='rclone sync -P --track-renames --fix-case --dry-run'
 
-    # Interactive remote file explorer
+    # Interactive remote file explorer (stat a single path)
     alias rcls='rclone lsjson --human-readable --stat'
+
+    # List directories
+    alias rclsd='rclone lsd'
+
+    # List files recursively with size/date
+    alias rclsl='rclone ls'
+
+    # Tree-style listing
+    alias rctree='rclone tree'
 fi
 
 # --- Navigation ---
