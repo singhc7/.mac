@@ -54,6 +54,12 @@ if command -v rclone >/dev/null 2>&1; then
 
     # Tree-style listing
     alias rctree='rclone tree'
+
+    # Check files match between source and dest (no transfer)
+    alias rccheck='rclone check -P'
+
+    # Show disk usage of a remote path
+    alias rcsize='rclone size'
 fi
 
 # --- Navigation ---
