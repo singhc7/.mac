@@ -40,6 +40,9 @@ if command -v rclone >/dev/null 2>&1; then
     # Fast and safe mirror sync
     alias rcsync='rclone sync -P --track-renames --fix-case'
 
+    # Dry-run sync (preview what would change)
+    alias rcsync-dry='rclone sync -P --track-renames --fix-case --dry-run'
+
     # Interactive remote file explorer
     alias rcls='rclone lsjson --human-readable --stat'
 fi
