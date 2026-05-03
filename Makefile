@@ -1,7 +1,7 @@
 DOTFILES_DIR := $(shell pwd)
 HOME_DIR := $(HOME)
 
-PACKAGES := zsh git kitty nvim tmux fzf eza mpv aria2 yt-dlp tealdeer scripts starship
+PACKAGES := zsh git kitty nvim tmux fzf eza mpv aria2 yt-dlp tealdeer scripts p10k
 
 .PHONY: help stow unstow restow list
 

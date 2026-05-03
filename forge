@@ -76,7 +76,7 @@ STOW_PACKAGES=(
     yt-dlp
     tealdeer
     scripts
-    starship
+    p10k
 )
 
 info "Deploying dotfiles with GNU Stow from $DOTFILES_DIR..."
