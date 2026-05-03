@@ -5,7 +5,7 @@ A minimalist, personal collection of configuration files optimized for a resourc
 ## Overview
 This repository manages my core terminal environment and tooling configurations. It relies on [GNU Stow](https://www.gnu.org/software/stow/) to handle symlinking these configuration files directly into the home directory, keeping the system clean and the dotfiles easily version-controlled.
 
-**Primary terminal:** Kitty (Adwaita darker theme) | **Prompt:** Starship | **Editor:** Neovim
+**Primary terminal:** Kitty (Adwaita darker theme) | **Prompt:** Powerlevel10k | **Editor:** Neovim
 
 > The `alacritty/` directory is kept as an archived configuration. Kitty is the actively maintained terminal emulator.
 

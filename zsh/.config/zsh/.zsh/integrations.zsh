@@ -11,11 +11,6 @@ if command -v zoxide >/dev/null 2>&1; then
     export _ZO_MAXAGE=10000
 fi
 
-# --- Starship Prompt ---
-if command -v starship >/dev/null 2>&1; then
-    eval "$(starship init zsh)"
-fi
-
 # --- direnv ---
 if command -v direnv >/dev/null 2>&1; then
     eval "$(direnv hook zsh)"

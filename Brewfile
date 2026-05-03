@@ -1,6 +1,6 @@
 # Shell & Prompt
 brew "zsh"
-brew "starship"
+brew "powerlevel10k"
 
 # Terminal
 brew "kitty"

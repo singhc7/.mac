@@ -1,4 +1,13 @@
 # ==========================================
+# Powerlevel10k Instant Prompt
+# Must run before any output. Cached prompt is regenerated on each
+# config change; safe to keep at the very top of .zshrc.
+# ==========================================
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+    source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+# ==========================================
 # Antidote Load (installed by forge)
 # ==========================================
 source ~/.antidote/antidote.zsh
@@ -31,3 +40,12 @@ for config in functions aliases; do
         source "$ZSH_CONFIG_DIR/$config.zsh"
     fi
 done
+
+# ==========================================
+# Powerlevel10k Theme + Configuration
+# Loaded after exports.zsh so $PATH includes Homebrew's bin.
+# ==========================================
+P10K_THEME="$(brew --prefix 2>/dev/null)/share/powerlevel10k/powerlevel10k.zsh-theme"
+[[ -r "$P10K_THEME" ]] && source "$P10K_THEME"
+unset P10K_THEME
+[[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
