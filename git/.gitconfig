@@ -24,6 +24,7 @@
 	ui = auto
 [core]
 	editor = nvim
+	pager = delta
 [diff]
 	tool = nvimdiff
 [difftool]
