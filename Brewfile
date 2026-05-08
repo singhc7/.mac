@@ -5,8 +5,9 @@ brew "powerlevel10k"
 # Terminal
 brew "kitty"
 
-# Editor
+# Editor and Pager
 brew "neovim"
+brew "git-delta"
 
 # File Management & Search
 brew "fd"
