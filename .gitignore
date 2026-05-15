@@ -39,3 +39,6 @@ nnn/.config/nnn/*.tar.gz
 nnn/.config/nnn/sessions/
 nnn/.config/nnn/bookmarks/
 nnn/.config/nnn/.lastd
+
+# karabiner auto backups
+karabiner/.config/karabiner/automatic_backups/
